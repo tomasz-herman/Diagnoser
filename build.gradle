@@ -16,20 +16,10 @@ repositories {
     mavenCentral()
 }
 
-dependencies {
-    implementation 'org.openjfx:javafx-base:14'
-    implementation 'org.openjfx:javafx-graphics:14'
-    implementation 'org.openjfx:javafx-controls:14'
-    implementation 'org.openjfx:javafx-swing:14'
-    implementation 'org.openjfx:javafx-fxml:14'
-
-    testImplementation group: 'junit', name: 'junit', version: '4.12'
-}
-
 javafx {
     version = '14'
     modules = [ 'javafx.base', 'javafx.graphics', 'javafx.controls', 'javafx.swing', 'javafx.fxml' ]
-    mainClassName = 'org.hellofx.Main'
+    mainClassName = 'pl.edu.pw.mini.msi.diagnoser.MainPanel'
 }
 
 mainClassName = 'pl.edu.pw.mini.msi.diagnoser.Main'
