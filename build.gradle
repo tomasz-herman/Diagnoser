@@ -1,0 +1,65 @@
+import org.gradle.internal.os.OperatingSystem
+
+plugins {
+    id 'java'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.9'
+    id 'org.beryx.runtime' version '1.11.4'
+}
+
+group 'pl.edu.pw.mini.msi.diagnoser'
+version '1.0.0'
+sourceCompatibility = '14'
+targetCompatibility = '14'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.openjfx:javafx-base:14'
+    implementation 'org.openjfx:javafx-graphics:14'
+    implementation 'org.openjfx:javafx-controls:14'
+    implementation 'org.openjfx:javafx-swing:14'
+    implementation 'org.openjfx:javafx-fxml:14'
+
+    testImplementation group: 'junit', name: 'junit', version: '4.12'
+}
+
+javafx {
+    version = '14'
+    modules = [ 'javafx.base', 'javafx.graphics', 'javafx.controls', 'javafx.swing', 'javafx.fxml' ]
+    mainClassName = 'org.hellofx.Main'
+}
+
+mainClassName = 'pl.edu.pw.mini.msi.diagnoser.Main'
+
+jar {
+    manifest {
+        attributes 'Main-Class': mainClassName
+    }
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+runtime {
+    options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
+    jpackage {
+        imageName = "Diagnoser"
+        installerName = "Diagnoser"
+        installerOptions = []
+        installerType = project.findProperty('installerType')
+        if (OperatingSystem.current().isWindows()) {
+            installerOptions += [
+                    '--win-per-user-install',
+                    '--win-dir-chooser',
+                    '--win-menu',
+                    '--win-shortcut',
+                    '--win-menu-group', 'MSI',
+                    '--name', 'Diagnoser',
+                    '--win-upgrade-uuid', '49273554-6ec7-47ef-8619-7b1377551575'
+            ]
+        }
+    }
+}
