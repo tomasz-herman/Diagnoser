@@ -14,9 +14,9 @@ public interface Distance<T, R> {
             result +=
                     Math.abs(f.getUpper() - t.getUpper()) +
                     Math.abs(f.getLower() - t.getLower()) +
-                    Math.abs(f.getLower() - t.getLower() - f.getLower() + t.getLower()) ;
+                    Math.abs(f.getLower() - f.getUpper() - t.getLower() + t.getUpper()) ;
         }
-        return result;
+        return result / (2 * from.getSymptoms().size());
     }
 
 }

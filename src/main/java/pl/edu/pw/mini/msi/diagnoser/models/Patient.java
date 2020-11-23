@@ -35,4 +35,12 @@ public class Patient {
     public void setDisease(Disease disease) {
         this.disease.set(disease);
     }
+
+    @Override
+    public String toString() {
+        return "Patient{" +
+                "name=" + name +
+                ", disease=" + disease +
+                '}';
+    }
 }

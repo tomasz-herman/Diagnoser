@@ -21,10 +21,14 @@ import java.util.List;
 import java.util.Random;
 
 public class MainController {
-    public TableView<Disease> diseasesTable;
-    public TableView<Patient> patientsTable;
-    public Button addPatientButton;
-    public Button removePatientButton;
+    @FXML
+    private TableView<Disease> diseasesTable;
+    @FXML
+    private TableView<Patient> patientsTable;
+    @FXML
+    private Button addPatientButton;
+    @FXML
+    private Button removePatientButton;
     private Stage stage;
 
     private KnowledgeBase knowledgeBase;
