@@ -1,4 +1,4 @@
-package pl.edu.pw.mini.msi.diagnoser.models;
+package pl.edu.pw.mini.msi.diagnoser.ai;
 
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleMapProperty;
@@ -9,7 +9,9 @@ import javafx.collections.MapChangeListener;
 import javafx.collections.SetChangeListener;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.util.StringConverter;
+import pl.edu.pw.mini.msi.diagnoser.models.Disease;
+import pl.edu.pw.mini.msi.diagnoser.models.Patient;
+import pl.edu.pw.mini.msi.diagnoser.models.Symptom;
 import pl.edu.pw.mini.msi.diagnoser.utils.Distance;
 import pl.edu.pw.mini.msi.diagnoser.utils.EditCell;
 import pl.edu.pw.mini.msi.diagnoser.utils.IdentityStringConverter;
@@ -97,6 +99,11 @@ public class KnowledgeBase {
         } else if(change.wasAdded()) {
             diseasesTable.getItems().add(change.getValueAdded());
         }
+        if(diseasesTable.getItems().isEmpty()) {
+            for (Patient patient : patients) {
+                patient.setDisease(new Disease("unknown"));
+            }
+        }
         recalculateBounds();
     }
 
@@ -117,6 +124,14 @@ public class KnowledgeBase {
                 patientsTable.getItems().addAll(change.getAddedSubList());
             }
         }
+    }
+
+    public void addKnownDisease(Disease disease){
+        for (String symptom : knownSymptoms) {
+            if(disease.getSymptoms().get(symptom) == null)
+                disease.addSymptom(symptom);
+        }
+        knownDiseases.put(disease.getName(), disease);
     }
 
     public void addKnownDisease(String diseaseName){
