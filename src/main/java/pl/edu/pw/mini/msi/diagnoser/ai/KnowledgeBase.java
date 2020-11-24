@@ -101,7 +101,7 @@ public class KnowledgeBase {
         }
         if(diseasesTable.getItems().isEmpty()) {
             for (Patient patient : patients) {
-                patient.setDisease(new Disease("unknown"));
+                patient.getDisease().setName("unknown");
             }
         }
         recalculateBounds();
@@ -110,6 +110,9 @@ public class KnowledgeBase {
     private void recalculateBounds(){
         for (Disease disease : knownDiseases.values()) {
             calculateBounds(disease.getSymptoms());
+        }
+        for (Patient patient : patients) {
+            calculateBounds(patient.getDisease().getSymptoms());
         }
         for (Patient patient : patients) {
             diagnose(patient, Distance::disease_hamming);
